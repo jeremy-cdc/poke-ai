@@ -1,7 +1,7 @@
 # Poke-AI
 
-<img src="./images/readme/python.png" alt="Python image" width="300"/>
-<img src="./images/readme/pokedex.png" alt="Pokedex image" width="300"/>
+<img src="./images/readme/python.png" alt="Python image" width="150"/>
+<img src="./images/readme/pokedex.png" alt="Pokedex image" width="150"/>
 
 <br>
 
