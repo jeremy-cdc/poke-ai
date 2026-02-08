@@ -4,6 +4,7 @@ import requests
 os.system("clear")
 
 pokeapi_url = "https://pokeapi.co/api/v2/pokemon"
+openai_url = "https://api.openai.com/v1/chat/completions"
 
 def clear_console():
     os.system("clear")
@@ -113,6 +114,7 @@ def get_pokemon(name):
     
     except requests.RequestException as e:
         print(f"\nOcurrió un error en la petición de buscar un pokémon: {e}")
+        return []
 
 def get_pokemon_list(limit, offset):
     try:
@@ -184,6 +186,8 @@ def print_pokemon_list():
         try:
             print("¿Cuántos pokémones quieres mostrar?")
             limit_list = int(input("\n▶ "))
+
+            if limit_list <= 0: raise ValueError("El límite de lista debe ser positiva")
             
             pokemon_list = get_pokemon_list(limit_list, offset)
 
@@ -202,6 +206,52 @@ def print_pokemon_list():
         except ValueError:
             print("\n⚠ La cantidad de pokémones a mostrar no es válida. Vuelve a intentarlo ⚠\n")
 
+def ask_ai_pokemon_question(pokemon=None):
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {os.getenv("OPENAI_API_KEY")}" # Replace with your API key
+    }
+    
+    while True:
+        try:
+            print(f"\nRealiza tu pregunta:")  
+            user_question = input("\n▶ ").strip()
+            
+            content = ""
+            if pokemon: content = f"Eres un experto en pokémon y tu función es responder preguntas acerca de {pokemon["name"]} utilizando la información que te proporcionaré a continuación: {pokemon}. Si necesitas más información buscala en internet, trata de responder sí o sí a partir de infomación confiable. Es importante que tengas un tono agradable y que respondas exclusivamente y únicamente a preguntas de pokémon, como si fueras una pokedex. Si no puedes responder, solo indicalo tal cual y de forma directa." 
+            else: content = f"Eres un experto en pokémon y tu función es responder preguntas de la saga. Si necesitas más información buscala en internet, trata de responder sí o sí a partir de infomación confiable. Es importante que tengas un tono agradable y que respondas exclusivamente y únicamente a preguntas de pokémon, como si fueras una pokedex. Si no puedes responder, solo indicalo tal cual y de forma directa."
+
+            data = {
+                "model": "gpt-5-nano-2025-08-07",
+                "messages": [
+                    {
+                        "type": "system",
+                        "role": "system",
+                        "content": content
+                    },
+                    {
+                        "type": "message",
+                        "role": "user",
+                        "content": user_question
+                    }
+                ]
+            }
+
+            ai_requests = requests.post(openai_url, headers=headers, json=data)
+            ai_requests_json = ai_requests.json()
+
+            ai_response = ai_requests_json["choices"][0]["message"]["content"]
+            print(f"\n{ai_response}")
+
+            print(f"\n¿Deseas hacer otra pregunta? (s/n)")  
+            user_confirm = input("\n▶ ").lower().strip()
+
+            if user_confirm == "n" or user_confirm == "no":
+                break
+
+        except Exception as e:
+            print(f"Ocurrió un error con la petición a OPENAI: {e}")
+
 def search_pokemon():
     clear_console()
 
@@ -212,6 +262,12 @@ def search_pokemon():
 
             pokemon = get_pokemon(name_of_pokemon)
             print_pokemon(pokemon)
+
+            print(f"\n¿Deseas realizar una pregunta acerca de {name_of_pokemon.capitalize()}? (s/n)")  
+            user_confirm = input("\n▶ ").lower().strip()
+
+            if user_confirm == "s" or user_confirm == "si" or user_confirm == "sí":
+                ask_ai_pokemon_question(pokemon)
 
             print("\n¿Deseas buscar otro pokémon? (s/n)")
             user_confirm = input("\n▶ ").lower().strip()
@@ -241,11 +297,12 @@ def pokeai_menu():
         print("▓▓▓  POKEAI Menú  ▓▓▓")
         print("[1] VER POKEDEX")
         print("[2] BUSCAR POKÉMON")
-        print("[3] SALIR")
+        print("[3] PREGUNTAR A LA IA")
+        print("[4] SALIR")
         
         choice = input("\n▶ ")
 
-        if choice not in ["1", "2", "3"]:
+        if choice not in ["1", "2", "3", "4"]:
             clear_console()
             print("⚠ Debes escoger una opción válida. Vuelve a intentarlo ⚠\n")
             continue
@@ -255,6 +312,9 @@ def pokeai_menu():
         elif choice == "2": 
             search_pokemon()
         elif choice == "3":
+            ask_ai_pokemon_question()
+            print("\n")
+        elif choice == "4":
             print("\n¡Hasta luego, entrenador!")
             break
 
