@@ -19,4 +19,5 @@ I. Consumir la **API** de pokeapi: **https://pokeapi.co/** ✅<br>
 II. Diseñar y programar la **interfaz** del usuario ✅<br>
 III. Implementar los detalles pendientes ✅<br>
 IV. Implementar **IA** ✅<br>
-V. Probarlo!
+V. Arreglar bugs y errores ✅<br>
+VI. Probarlo!
