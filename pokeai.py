@@ -205,6 +205,7 @@ def print_pokemon_list():
 
         except ValueError:
             print("\n⚠ La cantidad de pokémones a mostrar no es válida. Vuelve a intentarlo ⚠\n")
+            continue
 
 def ask_ai_pokemon_question(pokemon=None):
     headers = {
@@ -251,6 +252,7 @@ def ask_ai_pokemon_question(pokemon=None):
 
         except Exception as e:
             print(f"Ocurrió un error con la petición a OPENAI: {e}")
+            return
 
 def search_pokemon():
     clear_console()
@@ -261,6 +263,9 @@ def search_pokemon():
             name_of_pokemon = input("\n▶ ")
 
             pokemon = get_pokemon(name_of_pokemon)
+            if len(pokemon) == 0:
+                raise Exception("El nombre del Pokémon no es válido")
+
             print_pokemon(pokemon)
 
             print(f"\n¿Deseas realizar una pregunta acerca de {name_of_pokemon.capitalize()}? (s/n)")  
@@ -283,6 +288,8 @@ def search_pokemon():
                 print("\n")
                 if user_confirm == "n" or user_confirm == "no":
                     break
+
+                continue
 
 def pokeai_menu():
     print("██████╗  ██████╗ ██╗  ██╗███████╗ █████╗ ██╗")
