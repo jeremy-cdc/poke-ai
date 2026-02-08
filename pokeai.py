@@ -114,11 +114,11 @@ def get_pokemon(name):
     except requests.RequestException as e:
         print(f"\nOcurrió un error en la petición de buscar un pokémon: {e}")
 
-def get_pokemon_list(limit):
+def get_pokemon_list(limit, offset):
     try:
         pokemon_list = []
 
-        pokeapi_requests = requests.get(f"{pokeapi_url}?limit={limit}")
+        pokeapi_requests = requests.get(f"{pokeapi_url}?limit={limit}&offset={offset}")
         pokemon_data_list = pokeapi_requests.json()
 
         pokemon_list_iterable = pokemon_data_list["results"]
@@ -178,19 +178,26 @@ def print_pokemon(pokemon):
 
 def print_pokemon_list():
     clear_console()
+    offset = 0
     
     while True:
         try:
             print("¿Cuántos pokémones quieres mostrar?")
             limit_list = int(input("\n▶ "))
-            pokemon_list = get_pokemon_list(limit_list)
+            
+            pokemon_list = get_pokemon_list(limit_list, offset)
 
             for pokemon in pokemon_list:
                 print_pokemon(pokemon)
             
-            ### Aquí iría el código para avanzar de páginas en la pokedex
+            print("\n¿Deseas mostrar más pokémones? (s/n)")
+            user_confirm = input("\n▶ ").lower().strip()
+
             print("\n")
-            break
+            if user_confirm == "n" or user_confirm == "no":
+                break
+
+            offset += limit_list
 
         except ValueError:
             print("\n⚠ La cantidad de pokémones a mostrar no es válida. Vuelve a intentarlo ⚠\n")
@@ -206,9 +213,12 @@ def search_pokemon():
             pokemon = get_pokemon(name_of_pokemon)
             print_pokemon(pokemon)
 
-            ### Aquí iría código sobre buscar otro pokémon o retirarse
+            print("\n¿Deseas buscar otro pokémon? (s/n)")
+            user_confirm = input("\n▶ ").lower().strip()
+
             print("\n")
-            break
+            if user_confirm == "n" or user_confirm == "no":
+                break
 
         except Exception: 
                 print("⚠ El nombre del pokémon no es válido. ¿Deseas volver a intentar (s/n)? ⚠")
