@@ -20,4 +20,4 @@ II. Diseñar y programar la **interfaz** del usuario ✅<br>
 III. Implementar los detalles pendientes ✅<br>
 IV. Implementar **IA** ✅<br>
 V. Arreglar bugs y errores ✅<br>
-VI. Probarlo!
+VI. Probarlo! ✅
