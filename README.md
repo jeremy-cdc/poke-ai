@@ -1,7 +1,7 @@
 # Poke-AI
 
-<img src="./images/readme/python.png" alt="Python image" width="150"/>
-<img src="./images/readme/pokedex.png" alt="Pokedex image" width="150"/>
+<img src="./images/readme/python.png" alt="Python image" width="40%">
+<img src="./images/readme/pokedex.png" alt="Pokedex image" width="40%">
 
 <br>
 
@@ -13,7 +13,8 @@ Link: **soon**
 
 ## Features (pasos)
 
-I. Consumir la **API** de pokeapi: **https://pokeapi.co/**<br>
-II. Definir la **interfaz** del usuario<br>
+I. Consumir la **API** de pokeapi: **https://pokeapi.co/** ✅<br>
+II. Diseñar y programar la **interfaz** del usuario ✅<br>
 III. Implementar **IA**<br>
-IV. Probarlo!
+IV. Implementar los detalles pendientes<br>
+V. Probarlo!
