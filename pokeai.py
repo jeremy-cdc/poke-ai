@@ -218,7 +218,7 @@ def search_pokemon():
                 if user_confirm == "n" or user_confirm == "no":
                     break
 
-def pokedex():
+def pokeai_menu():
     print("██████╗  ██████╗ ██╗  ██╗███████╗ █████╗ ██╗")
     print("██╔══██╗██╔═══██╗██║ ██╔╝██╔════╝██╔══██╗██║")
     print("██████╔╝██║   ██║█████╔╝ █████╗  ███████║██║")
@@ -248,4 +248,4 @@ def pokedex():
             print("\n¡Hasta luego, entrenador!")
             break
 
-pokedex()
+pokeai_menu()
