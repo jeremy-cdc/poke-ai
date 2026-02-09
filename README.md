@@ -9,9 +9,9 @@
 
 **Pokedex** combinada con **inteligencia artificial** para la interacción con el usuario realizada en Python.
 
-## Video paso a paso
+## Video paso a paso (+4h)
 
-Link: **soon**
+Link: **https://youtu.be/NjqWkkAyxWA**
 
 ## Features (pasos)
 
